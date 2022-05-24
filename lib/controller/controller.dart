@@ -1,10 +1,13 @@
 import 'package:mobx/mobx.dart';
 import 'package:uberapp/models/register_model.dart';
+import 'package:uberapp/services/database.dart';
 part 'controller.g.dart';
 
 class ControllerStore = _ControllerStoreBase with _$ControllerStore;
 
 abstract class _ControllerStoreBase with Store {
+  final clientService = ClientService();
+
   @observable
   String name = '';
 
@@ -25,6 +28,20 @@ abstract class _ControllerStoreBase with Store {
 
   @observable
   bool userPassenger = false;
+
+  @action
+  Future<void> createUser(
+      {required String email, required String password}) async {
+    try {
+      await clientService.registerUser(email: email, password: password);
+    } catch (erro) {
+      if (erro == "email-already-in-use") {
+        throw erro;
+      } else {
+        throw erro;
+      }
+    }
+  }
 
   @action
   setName(String value) {

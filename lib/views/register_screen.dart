@@ -77,19 +77,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      registerUser(
+                      controller.createUser(
                           email: controller.email,
                           password: controller.password);
-                      // switch (controller.userType) {
-                      //   case 'Driver':
-                      //     Navigator.pushNamedAndRemoveUntil(
-                      //         context, '/driver', (route) => false);
-
-                      //     break;
-                      //   case 'Passenger':
-                      //     Navigator.pushNamedAndRemoveUntil(
-                      //         context, '/passenger', (route) => false);
-                      // }
                     },
                     child: const Text(
                       AppStrings.txtRegisterButton,

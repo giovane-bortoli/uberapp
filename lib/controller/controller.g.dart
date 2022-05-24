@@ -121,6 +121,15 @@ mixin _$ControllerStore on _ControllerStoreBase, Store {
     });
   }
 
+  late final _$createUserAsyncAction =
+      AsyncAction('_ControllerStoreBase.createUser', context: context);
+
+  @override
+  Future<void> createUser({required String email, required String password}) {
+    return _$createUserAsyncAction
+        .run(() => super.createUser(email: email, password: password));
+  }
+
   late final _$_ControllerStoreBaseActionController =
       ActionController(name: '_ControllerStoreBase', context: context);
 

@@ -1,15 +1,19 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:uberapp/controller/controller.dart';
-import 'package:uberapp/views/register_screen.dart';
 
-ControllerStore controller = ControllerStore();
+//Service: instancia métodos de conexão com Firebase
 
-final clientFirebase = FirebaseAuth.instance;
+class ClientService {
+  final clientFirebase = FirebaseAuth.instance;
 
-Future<void> registerUser(
-    {required String email, required String password}) async {
-  final user = await clientFirebase.createUserWithEmailAndPassword(
-      email: controller.email, password: controller.password);
+  Future<void> registerUser(
+      {required String email, required String password}) async {
+    try {
+      await clientFirebase.createUserWithEmailAndPassword(
+          email: email, password: password);
+    } on FirebaseAuthException catch (e) {
+      throw e.code;
+    }
+  }
+
+//método de login
 }
