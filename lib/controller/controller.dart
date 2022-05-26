@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mobx/mobx.dart';
 import 'package:uberapp/models/register_model.dart';
 import 'package:uberapp/services/database.dart';
+import 'package:uberapp/services/maps.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:uberapp/views/passenger_screen.dart';
 part 'controller.g.dart';
 
 class ControllerStore = _ControllerStoreBase with _$ControllerStore;
@@ -41,6 +45,22 @@ abstract class _ControllerStoreBase with Store {
         //Navigator.pushReplacement(context, '/login');
         break;
     }
+  }
+
+  @action
+  void onMapCreated(GoogleMapController controller) {
+    GoogleMaps().controllerMaps.complete(controller);
+  }
+
+  @action
+  lastKnownLocation() async {
+    Position? lastPosition = await Geolocator.getLastKnownPosition();
+  }
+
+  @action
+  currentPosition() async {
+    Position currentPosition = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
   }
 
   @action

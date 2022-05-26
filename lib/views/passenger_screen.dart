@@ -1,4 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:uberapp/controller/controller.dart';
 
 class PassengerScreen extends StatefulWidget {
@@ -8,8 +12,13 @@ class PassengerScreen extends StatefulWidget {
   State<PassengerScreen> createState() => _PassengerScreenState();
 }
 
+Completer<GoogleMapController> mapController = Completer();
+CameraPosition cameraPosition =
+    CameraPosition(target: LatLng(-29.915232694095245, -51.188803497385315));
+
 class _PassengerScreenState extends State<PassengerScreen> {
   ControllerStore controller = ControllerStore();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +37,11 @@ class _PassengerScreenState extends State<PassengerScreen> {
               }),
         ],
       ),
-      body: Container(),
+      body: GoogleMap(
+        mapType: MapType.normal,
+        initialCameraPosition: cameraPosition,
+        onMapCreated: controller.onMapCreated,
+      ),
     );
   }
 }

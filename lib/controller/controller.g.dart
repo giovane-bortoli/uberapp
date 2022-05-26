@@ -159,7 +159,7 @@ mixin _$ControllerStore on _ControllerStoreBase, Store {
       AsyncAction('_ControllerStoreBase.logOutUser', context: context);
 
   @override
-  Future logOutUser() {
+  Future<void> logOutUser() {
     return _$logOutUserAsyncAction.run(() => super.logOutUser());
   }
 
