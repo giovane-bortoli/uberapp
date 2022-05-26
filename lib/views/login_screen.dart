@@ -60,7 +60,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 24,
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      try {
+                        controller.loginUser(
+                            email: controller.email,
+                            password: controller.password);
+
+                        Navigator.popAndPushNamed(context, '/passenger');
+                      } catch (erro) {
+                        controller.errorMessage = 'Erro ao logar';
+                      }
+                    },
                     child: const Text(
                       AppStrings.txtLogin,
                       style: TextStyle(color: Colors.white, fontSize: 30),

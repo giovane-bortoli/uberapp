@@ -121,6 +121,22 @@ mixin _$ControllerStore on _ControllerStoreBase, Store {
     });
   }
 
+  late final _$itensMenuAtom =
+      Atom(name: '_ControllerStoreBase.itensMenu', context: context);
+
+  @override
+  List<String> get itensMenu {
+    _$itensMenuAtom.reportRead();
+    return super.itensMenu;
+  }
+
+  @override
+  set itensMenu(List<String> value) {
+    _$itensMenuAtom.reportWrite(value, super.itensMenu, () {
+      super.itensMenu = value;
+    });
+  }
+
   late final _$createUserAsyncAction =
       AsyncAction('_ControllerStoreBase.createUser', context: context);
 
@@ -130,8 +146,36 @@ mixin _$ControllerStore on _ControllerStoreBase, Store {
         .run(() => super.createUser(email: email, password: password));
   }
 
+  late final _$loginUserAsyncAction =
+      AsyncAction('_ControllerStoreBase.loginUser', context: context);
+
+  @override
+  Future<void> loginUser({required String email, required String password}) {
+    return _$loginUserAsyncAction
+        .run(() => super.loginUser(email: email, password: password));
+  }
+
+  late final _$logOutUserAsyncAction =
+      AsyncAction('_ControllerStoreBase.logOutUser', context: context);
+
+  @override
+  Future logOutUser() {
+    return _$logOutUserAsyncAction.run(() => super.logOutUser());
+  }
+
   late final _$_ControllerStoreBaseActionController =
       ActionController(name: '_ControllerStoreBase', context: context);
+
+  @override
+  void menuItem(String choice) {
+    final _$actionInfo = _$_ControllerStoreBaseActionController.startAction(
+        name: '_ControllerStoreBase.menuItem');
+    try {
+      return super.menuItem(choice);
+    } finally {
+      _$_ControllerStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   dynamic setName(String value) {
@@ -189,6 +233,17 @@ mixin _$ControllerStore on _ControllerStoreBase, Store {
   }
 
   @override
+  void validateFieldsLogin() {
+    final _$actionInfo = _$_ControllerStoreBaseActionController.startAction(
+        name: '_ControllerStoreBase.validateFieldsLogin');
+    try {
+      return super.validateFieldsLogin();
+    } finally {
+      _$_ControllerStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   Map<String, dynamic> toMap() {
     final _$actionInfo = _$_ControllerStoreBaseActionController.startAction(
         name: '_ControllerStoreBase.toMap');
@@ -208,7 +263,8 @@ password: ${password},
 errorMessage: ${errorMessage},
 userId: ${userId},
 userType: ${userType},
-userPassenger: ${userPassenger}
+userPassenger: ${userPassenger},
+itensMenu: ${itensMenu}
     ''';
   }
 }

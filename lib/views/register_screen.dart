@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:uberapp/controller/controller.dart';
-import 'package:uberapp/services/database.dart';
 
 import '../components/txt_form_field.dart';
 import '../shared/utils/app_strings.dart';
@@ -27,7 +26,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               },
               icon: const Icon(Icons.arrow_back))
         ],
-        title: const Text('Register'),
+        title: const Text(AppStrings.txtAppBar),
       ),
       body: Observer(builder: (context) {
         return Container(
@@ -65,13 +64,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     padding: const EdgeInsets.only(bottom: 10),
                     child: Row(
                       children: <Widget>[
-                        const Text('Passenger'),
+                        const Text(AppStrings.txtSwitchPassenger),
                         Switch(
                             value: controller.userPassenger,
                             onChanged: (bool value) {
                               controller.userPassenger = value;
                             }),
-                        const Text('Driver'),
+                        const Text(AppStrings.txtSwitchDriver),
                       ],
                     ),
                   ),
@@ -80,6 +79,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       controller.createUser(
                           email: controller.email,
                           password: controller.password);
+
+                      switch (controller.userType) {
+                        case AppStrings.txtSwitchDriver:
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            '/driver',
+                            (route) => false,
+                          );
+
+                          break;
+                        case AppStrings.txtSwitchPassenger:
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            '/passenger',
+                            (route) => false,
+                          );
+                      }
                     },
                     child: const Text(
                       AppStrings.txtRegisterButton,

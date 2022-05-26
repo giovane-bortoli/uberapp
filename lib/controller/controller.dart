@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:mobx/mobx.dart';
 import 'package:uberapp/models/register_model.dart';
 import 'package:uberapp/services/database.dart';
@@ -29,18 +30,50 @@ abstract class _ControllerStoreBase with Store {
   @observable
   bool userPassenger = false;
 
+  @observable
+  List<String> itensMenu = ['LogOut', 'Config'];
+
+  @action
+  void menuItem(String choice) {
+    switch (choice) {
+      case 'LogOut':
+        logOutUser();
+        //Navigator.pushReplacement(context, '/login');
+        break;
+    }
+  }
+
   @action
   Future<void> createUser(
       {required String email, required String password}) async {
     try {
       await clientService.registerUser(email: email, password: password);
     } catch (erro) {
-      if (erro == "email-already-in-use") {
+      if (erro == 'email-already-in-use') {
         throw erro;
       } else {
         throw erro;
       }
     }
+  }
+
+  @action
+  Future<void> loginUser(
+      {required String email, required String password}) async {
+    try {
+      await clientService.loginFirebase(email: email, password: password);
+    } catch (erro) {
+      if (erro == 'user-not-found') {
+        throw erro;
+      } else {
+        throw erro;
+      }
+    }
+  }
+
+  @action
+  Future<void> logOutUser() async {
+    await clientService.logOutFirebase();
   }
 
   @action
@@ -78,14 +111,32 @@ abstract class _ControllerStoreBase with Store {
             email: email,
             password: password,
             userType: verifiedUserType(userType));
-
-        //método de cadastrar
-
       } else {
         errorMessage = 'fill in the email';
       }
     } else {
       errorMessage = 'fill in the name';
+    }
+  }
+
+  @action
+  void validateFieldsLogin() {
+    {
+      if (email.isNotEmpty && email.contains('@')) {
+        if (password.isNotEmpty && password.length > 6) {
+        } else {
+          errorMessage = 'fill in the password';
+        }
+
+        User user = User(
+            userId: userId,
+            name: name,
+            email: email,
+            password: password,
+            userType: verifiedUserType(userType));
+      } else {
+        errorMessage = 'fill in the email';
+      }
     }
   }
 
