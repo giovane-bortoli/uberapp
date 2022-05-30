@@ -121,6 +121,38 @@ mixin _$ControllerStore on _ControllerStoreBase, Store {
     });
   }
 
+  late final _$isDeniedForeverAtom =
+      Atom(name: '_ControllerStoreBase.isDeniedForever', context: context);
+
+  @override
+  bool get isDeniedForever {
+    _$isDeniedForeverAtom.reportRead();
+    return super.isDeniedForever;
+  }
+
+  @override
+  set isDeniedForever(bool value) {
+    _$isDeniedForeverAtom.reportWrite(value, super.isDeniedForever, () {
+      super.isDeniedForever = value;
+    });
+  }
+
+  late final _$currentPositionAtom =
+      Atom(name: '_ControllerStoreBase.currentPosition', context: context);
+
+  @override
+  Position? get currentPosition {
+    _$currentPositionAtom.reportRead();
+    return super.currentPosition;
+  }
+
+  @override
+  set currentPosition(Position? value) {
+    _$currentPositionAtom.reportWrite(value, super.currentPosition, () {
+      super.currentPosition = value;
+    });
+  }
+
   late final _$itensMenuAtom =
       Atom(name: '_ControllerStoreBase.itensMenu', context: context);
 
@@ -135,6 +167,22 @@ mixin _$ControllerStore on _ControllerStoreBase, Store {
     _$itensMenuAtom.reportWrite(value, super.itensMenu, () {
       super.itensMenu = value;
     });
+  }
+
+  late final _$lastKnownLocationAsyncAction =
+      AsyncAction('_ControllerStoreBase.lastKnownLocation', context: context);
+
+  @override
+  Future lastKnownLocation() {
+    return _$lastKnownLocationAsyncAction.run(() => super.lastKnownLocation());
+  }
+
+  late final _$getPositionAsyncAction =
+      AsyncAction('_ControllerStoreBase.getPosition', context: context);
+
+  @override
+  Future<void> getPosition() {
+    return _$getPositionAsyncAction.run(() => super.getPosition());
   }
 
   late final _$createUserAsyncAction =
@@ -264,6 +312,8 @@ errorMessage: ${errorMessage},
 userId: ${userId},
 userType: ${userType},
 userPassenger: ${userPassenger},
+isDeniedForever: ${isDeniedForever},
+currentPosition: ${currentPosition},
 itensMenu: ${itensMenu}
     ''';
   }

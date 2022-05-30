@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mobx/mobx.dart';
@@ -5,6 +7,7 @@ import 'package:uberapp/models/register_model.dart';
 import 'package:uberapp/services/database.dart';
 import 'package:uberapp/services/maps.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:uberapp/shared/utils/app_permissions.dart';
 import 'package:uberapp/views/passenger_screen.dart';
 part 'controller.g.dart';
 
@@ -12,6 +15,7 @@ class ControllerStore = _ControllerStoreBase with _$ControllerStore;
 
 abstract class _ControllerStoreBase with Store {
   final clientService = ClientService();
+  final userPosition = CheckPermission();
 
   @observable
   String name = '';
@@ -35,6 +39,16 @@ abstract class _ControllerStoreBase with Store {
   bool userPassenger = false;
 
   @observable
+  bool isDeniedForever = false;
+
+  void setIsDeniedForever(bool value) => isDeniedForever = value;
+
+  @observable
+  Position? currentPosition;
+
+  void setCurrentPosition(Position value) => currentPosition = value;
+
+  @observable
   List<String> itensMenu = ['LogOut', 'Config'];
 
   @action
@@ -48,20 +62,28 @@ abstract class _ControllerStoreBase with Store {
   }
 
   @action
-  void onMapCreated(GoogleMapController controller) {
-    GoogleMaps().controllerMaps.complete(controller);
-  }
-
-  @action
   lastKnownLocation() async {
     Position? lastPosition = await Geolocator.getLastKnownPosition();
   }
 
+//MAPS!!
   @action
-  currentPosition() async {
-    Position currentPosition = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
+  Future<void> getPosition() async {
+    try {
+      final result = await userPosition.getPosition();
+      log(result.toString());
+
+      setCurrentPosition(result);
+      setIsDeniedForever(false);
+    } catch (e) {
+      log(e.toString());
+      if (e.toString() == 'DENIED_FOREVER') {
+        setIsDeniedForever(true);
+      }
+    }
   }
+
+  //FIREBASE
 
   @action
   Future<void> createUser(

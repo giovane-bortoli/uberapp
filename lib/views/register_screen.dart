@@ -13,7 +13,7 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  ControllerStore controller = ControllerStore();
+  final ControllerStore controller = ControllerStore();
 
   @override
   Widget build(BuildContext context) {
