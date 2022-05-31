@@ -105,6 +105,22 @@ mixin _$ControllerStore on _ControllerStoreBase, Store {
     });
   }
 
+  late final _$typeAddressAtom =
+      Atom(name: '_ControllerStoreBase.typeAddress', context: context);
+
+  @override
+  String get typeAddress {
+    _$typeAddressAtom.reportRead();
+    return super.typeAddress;
+  }
+
+  @override
+  set typeAddress(String value) {
+    _$typeAddressAtom.reportWrite(value, super.typeAddress, () {
+      super.typeAddress = value;
+    });
+  }
+
   late final _$userPassengerAtom =
       Atom(name: '_ControllerStoreBase.userPassenger', context: context);
 
@@ -259,6 +275,17 @@ mixin _$ControllerStore on _ControllerStoreBase, Store {
   }
 
   @override
+  dynamic setTypeAddress(String value) {
+    final _$actionInfo = _$_ControllerStoreBaseActionController.startAction(
+        name: '_ControllerStoreBase.setTypeAddress');
+    try {
+      return super.setTypeAddress(value);
+    } finally {
+      _$_ControllerStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String verifiedUserType(dynamic userType) {
     final _$actionInfo = _$_ControllerStoreBaseActionController.startAction(
         name: '_ControllerStoreBase.verifiedUserType');
@@ -292,17 +319,6 @@ mixin _$ControllerStore on _ControllerStoreBase, Store {
   }
 
   @override
-  Map<String, dynamic> toMap() {
-    final _$actionInfo = _$_ControllerStoreBaseActionController.startAction(
-        name: '_ControllerStoreBase.toMap');
-    try {
-      return super.toMap();
-    } finally {
-      _$_ControllerStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
 name: ${name},
@@ -311,6 +327,7 @@ password: ${password},
 errorMessage: ${errorMessage},
 userId: ${userId},
 userType: ${userType},
+typeAddress: ${typeAddress},
 userPassenger: ${userPassenger},
 isDeniedForever: ${isDeniedForever},
 currentPosition: ${currentPosition},

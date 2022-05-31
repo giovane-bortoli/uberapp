@@ -7,6 +7,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:uberapp/controller/controller.dart';
 import 'package:uberapp/shared/utils/app_colors.dart';
+import 'package:uberapp/shared/utils/app_strings.dart';
 
 class PassengerScreen extends StatefulWidget {
   const PassengerScreen({Key? key}) : super(key: key);
@@ -67,7 +68,7 @@ class _PassengerScreenState extends State<PassengerScreen> {
     return Observer(builder: (context) {
       return Scaffold(
         appBar: AppBar(
-          title: const Text('Passenger Screen'),
+          title: const Text(AppStrings.txtPassengerAppBar),
           actions: [
             PopupMenuButton<String>(
                 onSelected: controller.menuItem,
@@ -104,10 +105,89 @@ class _PassengerScreenState extends State<PassengerScreen> {
                     borderRadius: BorderRadius.circular(3),
                     color: Colors.white,
                   ),
-                  child: Text('Resultado'),
+                  child: TextField(
+                    readOnly: true,
+                    decoration: InputDecoration(
+                        icon: Container(
+                          margin: const EdgeInsets.only(
+                            left: 20,
+                          ),
+                          width: 10,
+                          height: 20,
+                          child: const Icon(
+                            Icons.location_on,
+                            color: AppColors.deepPurple,
+                          ),
+                        ),
+                        hintText: AppStrings.txtLocation,
+                        border: InputBorder.none,
+                        contentPadding:
+                            const EdgeInsets.only(left: 15, top: 5)),
+                  ),
                 ),
               ),
             ),
+            Positioned(
+              top: 55,
+              left: 0,
+              right: 0,
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Container(
+                  height: 50,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: AppColors.deepPurple),
+                    borderRadius: BorderRadius.circular(3),
+                    color: Colors.white,
+                  ),
+                  child: TextField(
+                    onChanged: (String value) {
+                      controller.setTypeAddress(value);
+                    },
+                    decoration: InputDecoration(
+                        icon: Container(
+                          margin: const EdgeInsets.only(
+                            left: 20,
+                          ),
+                          width: 10,
+                          height: 20,
+                          child: const Icon(
+                            Icons.local_taxi,
+                            color: AppColors.deepPurple,
+                          ),
+                        ),
+                        hintText: AppStrings.txtDestination,
+                        border: InputBorder.none,
+                        contentPadding:
+                            const EdgeInsets.only(left: 15, top: 5)),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              right: 0,
+              left: 0,
+              bottom: 0,
+              child: Container(
+                margin: const EdgeInsets.only(
+                  left: 50,
+                  right: 50,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      //chamar uber
+                    },
+                    child: const Text(
+                      AppStrings.txtCallButton,
+                      style: TextStyle(color: Colors.white, fontSize: 30),
+                    ),
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       );

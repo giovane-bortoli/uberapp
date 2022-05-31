@@ -36,6 +36,9 @@ abstract class _ControllerStoreBase with Store {
   String userType = '';
 
   @observable
+  String typeAddress = '';
+
+  @observable
   bool userPassenger = false;
 
   @observable
@@ -134,6 +137,11 @@ abstract class _ControllerStoreBase with Store {
   }
 
   @action
+  setTypeAddress(String value) {
+    typeAddress = value;
+  }
+
+  @action
   String verifiedUserType(userType) {
     return userType ? 'Driver' : 'Passenger';
   }
@@ -147,7 +155,7 @@ abstract class _ControllerStoreBase with Store {
           errorMessage = 'fill in the password';
         }
 
-        User user = User(
+        UserModel user = UserModel(
             userId: userId,
             name: name,
             email: email,
@@ -170,7 +178,7 @@ abstract class _ControllerStoreBase with Store {
           errorMessage = 'fill in the password';
         }
 
-        User user = User(
+        UserModel user = UserModel(
             userId: userId,
             name: name,
             email: email,
@@ -183,12 +191,17 @@ abstract class _ControllerStoreBase with Store {
   }
 
   @action
-  Map<String, dynamic> toMap() {
-    Map<String, dynamic> map = {
-      'name': name,
-      'email': email,
-      'userType': userType,
-    };
-    return map;
+  Future<void> callUber() async {
+    if (typeAddress.isNotEmpty) {}
   }
+
+  // @action
+  // Map<String, dynamic> toMap() {
+  //   Map<String, dynamic> map = {
+  //     'name': name,
+  //     'email': email,
+  //     'userType': userType,
+  //   };
+  //   return map;
+  // }
 }

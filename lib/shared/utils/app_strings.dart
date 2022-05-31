@@ -16,5 +16,10 @@ abstract class AppStrings {
   static const txtSwitchPassenger = 'Passenger';
   static const txtSwitchDriver = 'Driver';
 
+  //Passenger Screen
+  static const txtPassengerAppBar = 'PassengerScreen';
+  static const txtLocation = 'MyLocation';
+  static const txtDestination = 'Type your destination';
+  static const txtCallButton = 'Call Uber';
   //tratar strings de erro firebase
 }
